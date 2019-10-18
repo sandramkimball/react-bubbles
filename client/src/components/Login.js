@@ -1,62 +1,60 @@
-import React, {useState} from "react";
+import React from "react";
 import axiosWithAuth from '../utilis/axiosWithAuth';
 import {Redirect} from 'react-router-dom';
 
-
-const Login = props => {
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
-  });
-  
-
-  const handleChange = e => {
-    setCredentials({
-        ...credentials,
-        [e.target.name]: e.target.value
-    });
+class Login extends React.Component {
+  state = {
+      credentials: {
+          username: 'cc',
+          password: 'cc'
+      }
   };
 
-  const login = e => {
+  handleChange = e =>{
+      this.setState({
+          credentials: {
+              ...this.state.credentials,
+              [e.target.name]: e.target.value
+          }
+      });
+  };
+
+  login = e => {
     e.preventDefault();
     axiosWithAuth()
-    .post('/api/login', credentials)
-    .then(res => {
-      localStorage.setItem('token', res.data.payload);
-      props.history.push('/bubblepage')
+    .post('/api/login', this.state.credentials)
+    .then(res=> {
+        localStorage.setItem('token', res.data.payload);
+        this.props.history.push('/bubblepage');
     })
-    .catch(err=> console.log('Cannot Login', err.response))
-  }
+    .catch(err=>console.log('Access Denied, Cyborg!', err))
+}
 
-  const logout = e => {e.preventDefault();
-    axiosWithAuth()
-    .post('/api/login', credentials)
-    .then(res => {
-      localStorage.setItem('token', !res.data.payload);
-      props.history.push('/login')
-    })
-    .catch(err=> console.log('Cannot Logout', err))
-  }
-
-  if (localStorage.getItem('token')) return <Redirect to='bubblepage'/>
   
+   render(){
+    //  if (localStorage.getItem('token')) return <Redirect to='bubblepage'/>
     return (
       <>
         <h1>Welcome to the Bubble App!</h1>
         <div className='form' >
+
           <form>
-            <input type='text' name='username' value={credentials.username} 
-            placeholder="username" onChange={handleChange}/>
+            <input type='text' name='username' 
+            value={this.state.credentials.username} 
+            placeholder="username" 
+            onChange={this.handleChange}/>
 
-            <input type='password' name='password' value={credentials.password} placeholder="password" onChange={handleChange}/>
+            <input type='password' name='password' 
+            value={this.state.credentials.password} 
+            placeholder="password" 
+            onChange={this.handleChange}/>
 
-            <button type='submit' onClick={login}>Login</button>
-            <button onClick={logout}>Logout</button>
+            <button type='submit' onClick={this.login}>Login</button>
 
           </form>
         </div>
       </>
-    );
+    );}
 };
 
 export default Login;

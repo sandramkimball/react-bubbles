@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import PrivateRoute from './components/PrivateRoute'
@@ -7,21 +7,21 @@ import BubblePage from './components/BubblePage';
 import "./styles.scss";
 
 function App() {
-  // const [colors, setColors] = useState([]);
+  const [colors, setColors] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') || false)
 
   return (
     <Router>
       <nav>
         <ul>
-          <li><Link to='/login'>Login</Link></li>
-          <li><Link to='/bubbles'>Bubbles</Link></li>
+          <li><Link to='/'>Login</Link></li>
+          <li><Link to='/bubblepage'>Bubbles</Link></li>
         </ul>
       </nav>
       <div className="App">
         <Switch>
-          <Route exact path="/" component={Login} />
-          <PrivateRoute  path='/bubblepage' component={BubblePage}/>
-          <Route component={Login}/>
+          <Route exact path="/" component={Login}/>
+          <Route exact path='/bubblepage' component={BubblePage}/>
         </Switch>
       </div>
     </Router>

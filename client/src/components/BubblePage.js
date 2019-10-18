@@ -7,20 +7,16 @@ import axiosWithAuth from "../utilis/axiosWithAuth";
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
 
-  // componentDidMount(){
-  //   axiosWithAuth
-  //   .length('/api/colors')
-  //   .then(res=> setColorList(res.data))
-  //   .catch(err=> console.log(`No damn colors still`, err))
+  // const logout = e => {
+  //   localStorage.removeItem('token'); 
+  //   props.history.push('/')
   // }
-
   useEffect(()=>{
     axiosWithAuth()
     .get('/api/colors')
-    .then(res=> setColorList(res.data))
+    .then(res=> {setColorList(res.data)})
     .catch(err=> console.log(`No damn colors still`, err))
-  }, [])
-  
+  }, [colorList.length])
     return (
       <>
         <ColorList colors={colorList} updateColors={setColorList} />

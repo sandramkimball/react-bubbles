@@ -7,7 +7,6 @@ const initialColor = {
 };
 
 const ColorList = ({ colors, updateColors }) => {
-  console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -38,7 +37,7 @@ const ColorList = ({ colors, updateColors }) => {
 
   return (
     <div className="colors-wrap">
-      <p>colors</p>
+      <p>COLORS</p>
       <ul>
         {colors.map(color => (
           <li key={color.color} onClick={() => editColor(color)}>
@@ -85,7 +84,7 @@ const ColorList = ({ colors, updateColors }) => {
           </div>
         </form>
       )}
-      <div className="spacer" />      
+      <div className="spacer" />  
     </div>
   );
 };
