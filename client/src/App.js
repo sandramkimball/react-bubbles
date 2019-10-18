@@ -7,8 +7,6 @@ import BubblePage from './components/BubblePage';
 import "./styles.scss";
 
 function App() {
-  const [colors, setColors] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token') || false)
 
   return (
     <Router>

@@ -4,21 +4,30 @@ import ColorList from "./ColorList";
 import axiosWithAuth from "../utilis/axiosWithAuth";
 
 
-const BubblePage = () => {
+const BubblePage = props=> {
   const [colorList, setColorList] = useState([]);
 
-  // const logout = e => {
-  //   localStorage.removeItem('token'); 
-  //   props.history.push('/')
-  // }
+  const logout = e => {
+    localStorage.removeItem('token'); 
+    props.history.push('/')
+  }
+
   useEffect(()=>{
-    axiosWithAuth()
-    .get('/api/colors')
-    .then(res=> {setColorList(res.data)})
+    axiosWithAuth().get('/api/colors')
+    .then(res=> {
+      console.log(res);
+      setColorList(res.data);
+    })
     .catch(err=> console.log(`No damn colors still`, err))
-  }, [colorList.length])
+  }, [])
+
+
     return (
       <>
+      <nav>
+        <button onClick={logout}>Logout</button>
+      </nav>
+      
         <ColorList colors={colorList} updateColors={setColorList} />
         <Bubbles colors={colorList} />  
       </>

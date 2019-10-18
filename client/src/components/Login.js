@@ -5,8 +5,8 @@ import {Redirect} from 'react-router-dom';
 class Login extends React.Component {
   state = {
       credentials: {
-          username: 'cc',
-          password: 'cc'
+          username: '',
+          password: ''
       }
   };
 
@@ -27,12 +27,12 @@ class Login extends React.Component {
         localStorage.setItem('token', res.data.payload);
         this.props.history.push('/bubblepage');
     })
-    .catch(err=>console.log('Access Denied, Cyborg!', err))
+    .catch(err=>console.log('Access Denied, Cyborg!', err.response))
 }
 
   
    render(){
-    //  if (localStorage.getItem('token')) return <Redirect to='bubblepage'/>
+     if (localStorage.getItem('token')) return <Redirect to='bubblepage'/>
     return (
       <>
         <h1>Welcome to the Bubble App!</h1>
