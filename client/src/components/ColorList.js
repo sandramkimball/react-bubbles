@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../utilis/axiosWithAuth";
-// import UpdateColors from './UpdateColors';
 
 const initialColor = {
   color: "",
@@ -20,9 +19,10 @@ const ColorList = ({ colors, updateColors }) => {
   const saveEdit = e => {
     e.preventDefault();
     axiosWithAuth()
-    .put(`/api/colors/${this.color.id}`)
+    .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
     .then(res=> {
-      localStorage.setItem('token', res.data.payload)
+      updateColors([...colors.filter(color=> color.id !== colorToEdit.id), res.data])
+      setEditing(false);
     })
     .catch(err=>console.log('Edit not saved', err))
   };
@@ -31,7 +31,7 @@ const ColorList = ({ colors, updateColors }) => {
     axiosWithAuth()
     .delete(`/api/colors/${color.id}`)
     .then(res=> {
-      localStorage.setItem('token', res.data.payload)
+      updateColors(colors.filter(color=>color.id !== res.data))
     })
     .catch(err=>console.log('Undeleted', err))
   };
@@ -85,11 +85,7 @@ const ColorList = ({ colors, updateColors }) => {
           </div>
         </form>
       )}
-      <div className="spacer" />
-      {/* <Route path='api/colors/:id' render={props=> (
-        <UpdateColors {...props} colors={colors} updateColors={setColors}/>
-      )}/> */}
-      
+      <div className="spacer" />      
     </div>
   );
 };
