@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { axiosWithAuth } from "../utilis/axiosWithAuth";
+// import UpdateColors from './UpdateColors';
 
 const initialColor = {
   color: "",
@@ -20,7 +20,7 @@ const ColorList = ({ colors, updateColors }) => {
   const saveEdit = e => {
     e.preventDefault();
     axiosWithAuth()
-    .put(`/api/colors/${color.id}`)
+    .put(`/api/colors/${this.color.id}`)
     .then(res=> {
       localStorage.setItem('token', res.data.payload)
     })
@@ -86,7 +86,10 @@ const ColorList = ({ colors, updateColors }) => {
         </form>
       )}
       <div className="spacer" />
-      {/* stretch - build another form here to add a color */}
+      {/* <Route path='api/colors/:id' render={props=> (
+        <UpdateColors {...props} colors={colors} updateColors={setColors}/>
+      )}/> */}
+      
     </div>
   );
 };

@@ -7,6 +7,8 @@ import Bubbles from './components/Bubbles';
 import "./styles.scss";
 
 function App() {
+  // const [colors, setColors] = useState([]);
+
   return (
     <Router>
       <nav>
